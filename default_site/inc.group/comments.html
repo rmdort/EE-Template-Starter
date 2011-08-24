@@ -1,0 +1,67 @@
+<!-- Comment Listing -->
+{exp:comment:entries sort="desc" limit="20" dynamic="off" paginate="bottom"  entry_id="{embed:entry_id}"}
+
+{if count==1}<ul id="Comments">{/if}
+<li>
+
+	{exp:ce_gravatar:pair email="{email}" default="404" size="40"}
+	{if gravatar}
+	  <img src="{gravatar}" alt="" />
+	{if:else}
+	  <img src="{exp:ce_gravatar:single email="blah@example.com" default="mm"}" alt="" width="40">
+	{/if}
+	{/exp:ce_gravatar:pair}
+	
+	{comment}	
+	
+	<span class="date">{comment_date format="%F %d, %Y at %g.%i %a"}</span>
+	<p class="author">{if url}<a href="{url}">{name}</a>{if:else}<strong>{name}</strong>{/if}</p>
+	
+</li>
+{if count==total_results}</ul>{/if}
+
+{paginate}
+  {if {total_pages} > 1}
+  <p>Page {current_page} of {total_pages} pages {pagination_links}</p>
+  {/if}
+{/paginate}
+
+{if no_results}
+  <p>There are no comments for this entry yet.</p>
+{/if}
+
+{/exp:comment:entries}
+<!-- / Comment Listing -->
+
+<!-- Comment Form -->
+{exp:comment:form entry_id="{embed:entry_id}" form_id="CommentForm"}
+
+<h4>LEAVE A REPLY</h4>
+
+{if logged_out}
+<p><label for="Name">Name: </label><input type="text" id="Name" name="name" value="{name}" size="50" /></p>
+<p><label for="Email">Email: (required, will not be published) </label><input type="text" id="Email" name="email" value="{email}" size="50" /></p>
+<p><label for="URL">URL: </label><input type="text" id="URL" name="url" value="{url}" size="50" /></p>
+{/if}
+
+<p><label for="comment">Comment:</label><textarea name="comment" id="comment" cols="70" rows="5">{comment}</textarea></p>
+
+{if captcha}
+<label for="captcha">Captcha</label>
+<p><input type="text" name="captcha" id="captcha" value="{captcha_word}" size="20" maxlength="20" style="width:140px;" /></p>
+<p>{captcha}</p>
+{/if}
+
+{if logged_out}
+<p><input type="checkbox" name="save_info" id="save_info" value="yes" {save_info} /><label for="save_info" class="labelInline">Remember my personal information</label></p>
+{/if}
+
+<p>
+  <input type="checkbox" name="notify_me" id="notify_me" value="yes" {notify_me} />
+  <label for="notify_me" class="labelInline">Notify me of follow-up comments?</label>
+</p>
+
+<p><input type="image" src="{site_url}images/button-submit.jpg" alt="Submit"></p>
+
+{/exp:comment:form}
+<!-- / Comment Form -->

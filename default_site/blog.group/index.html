@@ -1,0 +1,43 @@
+{preload_replace:channel="blog"}
+{embed="inc/header" title="Blog"}
+
+
+  <!-- Listing -->
+  {exp:channel:entries channel="{channel}" limit="10" status="not Closed" paginate="bottom"}
+  
+  {if count==1}<ol>{/if}
+    
+    <li>
+      <h2><a href="/blog/view/{url_title}" title="Read more about {title}">{title}</a></h2>
+      {summary}
+    </li>
+  
+  {if count==total_results}</ol>{/if}
+  
+    <!-- Paginate -->
+    {paginate}
+    {if {total_pages} > 1}
+    <div class="paginate">
+      {if previous_page}
+      <a href="{auto_path}" class="pageNav">Previous Page</a> &nbsp;
+      {/if}
+    
+      {pagination_links}
+      
+      {if next_page}
+      <a href="{auto_path}" class="pageNav">Next Page</a>
+      {/if}
+    </div>
+    {/if}
+    {/paginate}
+    <!-- / Paginate -->
+  
+  {if no_results}
+    <p>No results</p>
+  {/if}
+  
+  {/exp:channel:entries}
+  <!-- / Listing -->
+
+
+{embed="inc/footer"}

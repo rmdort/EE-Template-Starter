@@ -1,0 +1,37 @@
+{preload_replace:channel="blog"}
+{exp:channel:entries channel="{channel}" limit="1" status="not Closed" require_entry="yes"}
+
+{embed="inc/header" title="{title}"}
+  
+    <h1>{title}</h1>
+    
+    {summary}
+    
+    <p>Posted by <a href="{path=entries/author/{username}}">{author}</a> on {entry_date format="%F %d, %Y"} and is filed under 
+      {categories backspace="2"}
+        <a href="{path=entries}">{category_name}</a>, 
+      {/categories}
+    </p>
+    
+    {if no_results}
+      {redirect="404"}
+    {/if}
+    
+    
+    {embed="inc/comments" entry_id="{entry_id}"}
+    
+      
+  	<ul>
+  		{exp:channel:next_entry channel="blog"}
+  		<li><a href="{path=entries/view}">Next Post</a></li>
+  		{/exp:channel:next_entry}
+  		{exp:channel:prev_entry channel="blog"}
+  		<li><a href="{path=entries/view}">Previous Post</a></li>
+  		{/exp:channel:prev_entry}
+  	</ul>
+    
+  
+  {/exp:channel:entries}  
+
+
+{embed="inc/footer"}
